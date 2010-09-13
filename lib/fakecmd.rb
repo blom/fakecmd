@@ -14,19 +14,26 @@ module FakeCmd
   end
 
   def on!
-    Kernel.class_eval do
-      alias_method :fakecmd_backquote, :`
-
-      def `(cmd)
-        FakeCmd.process_command(cmd)
+    unless @enabled
+      @enabled = true
+      Kernel.class_eval do
+        alias_method :fakecmd_backquote, :`
+        def `(cmd)
+          FakeCmd.process_command(cmd)
+        end
       end
+      true
     end
   end
 
   def off!
-    Kernel.class_eval do
-      alias_method :`, :fakecmd_backquote
-      remove_method :fakecmd_backquote
+    if @enabled
+      @enabled = false
+      Kernel.class_eval do
+        alias_method :`, :fakecmd_backquote
+        remove_method :fakecmd_backquote
+      end
+      true
     end
   end
 
@@ -45,12 +52,13 @@ module FakeCmd
         return h[:output]
       end
     end
-    fakecmd_backquote("(exit 127)")
+    system ""
   end
 
   def add(cmd, status = 0, output = "", &block)
+    cmd = cmd.to_s if cmd.is_a?(Symbol)
     commands << {
-      :regexp => Regexp.new(cmd.to_s),
+      :regexp => Regexp.new(cmd),
       :output => block ? block.call : output,
       :status => status
     }

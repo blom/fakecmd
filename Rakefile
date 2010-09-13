@@ -7,7 +7,7 @@ require "rake/clean"
 require "spec/rake/spectask"
 require "yard"
 
-CLOBBER.include(".yardoc", "Gemfile.lock", "doc")
+CLOBBER.include(".yardoc", "coverage", "doc")
 MG.new("fakecmd.gemspec")
 
 task :default => :spec
@@ -16,8 +16,9 @@ Spec::Rake::SpecTask.new :spec do |t|
   t.libs       = %w(lib spec)
   t.spec_files = Dir["spec/**/*_spec.rb"]
   t.spec_opts  = %w(--color)
-  t.rcov       = true
-  t.rcov_opts  = %w(-x ^/,spec -t --sort coverage)
+  if RUBY_VERSION.to_f < 1.9
+    t.rcov, t.rcov_opts = true, %w(-x ^/,spec -t --sort coverage)
+  end
 end
 
 YARD::Rake::YardocTask.new :yard do |t|
