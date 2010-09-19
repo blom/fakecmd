@@ -2,6 +2,7 @@ require "set"
 
 module FakeCmd
   module_function
+  @@enabled = false
 
   module VERSION
     MAJOR = 0
@@ -14,26 +15,24 @@ module FakeCmd
   end
 
   def on!
-    unless @enabled
-      @enabled = true
+    unless @@enabled
       Kernel.class_eval do
         alias_method :fakecmd_backquote, :`
         def `(cmd)
           FakeCmd.process_command(cmd)
         end
       end
-      true
+      @@enabled = true
     end
   end
 
   def off!
-    if @enabled
-      @enabled = false
+    if @@enabled
       Kernel.class_eval do
         alias_method :`, :fakecmd_backquote
         remove_method :fakecmd_backquote
       end
-      true
+      !@@enabled = false
     end
   end
 

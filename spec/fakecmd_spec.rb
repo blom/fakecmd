@@ -55,6 +55,27 @@ describe FakeCmd do
       end
     end
   end
+
+  describe "@@enabled" do
+    let(:enabled) { FakeCmd.class_variable_get(:@@enabled) }
+
+    context "initially" do
+      subject { enabled }
+      specify { should be false }
+    end
+
+    context "after .on!" do
+      before { FakeCmd.on! }
+      subject { enabled }
+      specify { should be true }
+    end
+
+    context "after .off!" do
+      before { FakeCmd.off! }
+      subject { enabled }
+      specify { should be false }
+    end
+  end
 end
 
 describe FakeCmd, "::VERSION" do
