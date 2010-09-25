@@ -1,18 +1,9 @@
 require "set"
+require File.expand_path("../fakecmd/version", __FILE__)
 
 module FakeCmd
   module_function
   @@enabled = false
-
-  module VERSION
-    MAJOR = 0
-    MINOR = 0
-    PATCH = 0
-
-    def self.to_s
-      [MAJOR, MINOR, PATCH] * "."
-    end
-  end
 
   def on!
     unless @@enabled

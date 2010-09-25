@@ -1,13 +1,11 @@
 require "rubygems"
-require "bundler"
-Bundler.setup(:default)
-
+require "bundler/setup"
 require "mg"
 require "rake/clean"
 require "spec/rake/spectask"
 require "yard"
 
-CLOBBER.include(".yardoc", "coverage", "doc")
+CLOBBER.include(".yardoc", "doc")
 MG.new("fakecmd.gemspec")
 
 task :default => :spec
@@ -15,9 +13,9 @@ task :default => :spec
 Spec::Rake::SpecTask.new :spec do |t|
   t.libs       = %w(lib spec)
   t.spec_files = Dir["spec/**/*_spec.rb"]
-  t.spec_opts  = %w(--color)
-  if RUBY_VERSION.to_f < 1.9
-    t.rcov, t.rcov_opts = true, %w(-x ^/,spec -t --sort coverage)
+  if RUBY_VERSION.to_f == 1.8
+    t.rcov      = true
+    t.rcov_opts = %w(-x ^/,spec -t --sort coverage)
   end
 end
 

@@ -1,4 +1,4 @@
-require File.expand_path("../lib/fakecmd", __FILE__)
+require File.expand_path("../lib/fakecmd/version", __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name        = "fakecmd"

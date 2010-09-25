@@ -1,9 +1,4 @@
-if RUBY_VERSION.to_f > 1.8
-  require "simplecov"
-  SimpleCov.start
-end
-
-require "fakecmd"
+require File.expand_path("../../lib/fakecmd", __FILE__)
 
 Spec::Runner.configure do |config|
   config.before :each do
