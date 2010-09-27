@@ -6,7 +6,6 @@ describe FakeCmd do
       keys = [:regexp, :status, :output]
       args = [/foo/, 5, "..."]
       FakeCmd.add *args
-      FakeCmd.commands.should == Set.new([Hash[keys.zip args]])
     end
   end
 
