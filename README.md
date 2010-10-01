@@ -82,3 +82,31 @@ For now.
 ### Clear the collection
 
     FakeCmd.clear!
+
+A simple example
+----------------
+
+    module Users
+      def self.count
+        c = %x(users).split.size
+        c if $?.exitstatus == 0
+      end
+    end
+
+    class UsersTest < Test::Unit::TestCase
+      def setup
+        FakeCmd.clear!
+      end
+
+      def test_count_success
+        FakeCmd.add :users, 0, "a b c"
+        assert_equal 3, FakeCmd { Users.count }
+        assert_equal 0, $?.exitstatus
+      end
+
+      def test_count_failure
+        FakeCmd.add :users, 1
+        assert_nil FakeCmd { Users.count }
+        assert_equal 1, $?.exitstatus
+      end
+    end
