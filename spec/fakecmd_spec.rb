@@ -2,10 +2,14 @@ require "spec_helper"
 
 describe FakeCmd do
   describe :add do
+    before do
+      @hash = { :regexp => /foo/, :status => 5, :output => "..." }
+      FakeCmd.add @hash[:regexp], @hash[:status], @hash[:output]
+      FakeCmd.commands.size.should be 1
+    end
+
     it "should add the given command" do
-      keys = [:regexp, :status, :output]
-      args = [/foo/, 5, "..."]
-      FakeCmd.add *args
+      FakeCmd.commands.to_a.first.should == @hash
     end
   end
 
