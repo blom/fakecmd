@@ -2,7 +2,7 @@ fakecmd
 =======
 
 * [Homepage](http://github.com/blom/fakecmd)
-* [Documentation](http://rdoc.info/projects/blom/fakecmd)
+* [Documentation](http://rdoc.info/github/blom/fakecmd)
 
 Fakes system commands. Intended for use in tests. If your code relies heavily
 on system commands and verifies their exit status, you may not want to rely on
