@@ -1,16 +1,14 @@
 require "spec_helper"
 
 describe FakeCmd, "::VERSION" do
-  let(:major) { FakeCmd::VERSION::MAJOR }
-  let(:minor) { FakeCmd::VERSION::MINOR }
-  let(:patch) { FakeCmd::VERSION::PATCH }
+  let(:ver) { FakeCmd::VERSION }
 
-  describe :to_s do
-    subject { FakeCmd::VERSION.to_s }
-    specify { should == "#{major}.#{minor}.#{patch}" }
+  describe ".to_s" do
+    subject { ver.to_s }
+    specify { should == "#{ver::MAJOR}.#{ver::MINOR}.#{ver::PATCH}" }
   end
 
-  describe(:MAJOR) { specify { major.should be_a Fixnum } }
-  describe(:MINOR) { specify { minor.should be_a Fixnum } }
-  describe(:PATCH) { specify { patch.should be_a Fixnum } }
+  describe("::MAJOR") { specify { ver::MAJOR.should be_a Fixnum } }
+  describe("::MINOR") { specify { ver::MINOR.should be_a Fixnum } }
+  describe("::PATCH") { specify { ver::PATCH.should be_a Fixnum } }
 end
