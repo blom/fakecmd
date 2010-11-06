@@ -5,34 +5,34 @@ describe FakeCmd do
     before do
       @hash = { :regexp => /foo/, :status => 5, :output => "..." }
       FakeCmd.add @hash[:regexp], @hash[:status], @hash[:output]
-      FakeCmd.commands.size.should be 1
     end
 
-    it "should add the given command" do
+    it "should add commands" do
+      FakeCmd.commands.size.should be 1
       FakeCmd.commands.to_a.first.should == @hash
     end
   end
 
   describe :clear! do
-    before { FakeCmd.add :foo }
-
-    it "should call clear on commands" do
-      FakeCmd.commands.should_receive(:clear).once.and_return(Set.new)
-      FakeCmd.clear!
+    describe :commands do
+      it "should receive clear" do
+        FakeCmd.commands.should_receive(:clear).
+          exactly(:once).and_return(Set.new)
+        FakeCmd.clear!
+      end
     end
 
-    it "should clear commands" do
-      FakeCmd.commands.size.should_not be 0
+    it "should empty the commands collection" do
+      FakeCmd.add :foo
+      FakeCmd.commands.size.should be 1
       FakeCmd.clear!
       FakeCmd.commands.size.should be 0
     end
   end
 
   describe :commands do
-    before { FakeCmd.add :foo }
     subject { FakeCmd.commands }
     specify { should be_a Set }
-    its(:size) { should be 1 }
   end
 
   describe :process_command do
@@ -59,24 +59,17 @@ describe FakeCmd do
     end
   end
 
-  describe "@@enabled" do
+  describe :@@enabled do
     let(:enabled) { FakeCmd.send(:class_variable_get, :@@enabled) }
 
-    context "initially" do
-      subject { enabled }
-      specify { should be false }
-    end
-
-    context "after .on!" do
+    context "calling on!" do
       before { FakeCmd.on! }
-      subject { enabled }
-      specify { should be true }
+      specify { enabled.should be true }
     end
 
-    context "after .off!" do
+    context "calling off!" do
       before { FakeCmd.off! }
-      subject { enabled }
-      specify { should be false }
+      specify { enabled.should be false }
     end
   end
 end

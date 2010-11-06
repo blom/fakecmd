@@ -5,16 +5,21 @@ module FakeCmd
   module_function
   @@enabled = false
 
-  def on!
-    unless @@enabled
-      Kernel.class_eval do
-        alias_method :fakecmd_backquote, :`
-        def `(cmd)
-          FakeCmd.process_command(cmd)
-        end
-      end
-      @@enabled = true
-    end
+  def add(cmd, status = 0, output = "", &block)
+    cmd = cmd.to_s if cmd.is_a?(Symbol)
+    commands << {
+      :regexp => Regexp.new(cmd),
+      :output => block ? block.call : output,
+      :status => status
+    }
+  end
+
+  def clear!
+    commands.clear
+  end
+
+  def commands
+    @_commands ||= Set.new
   end
 
   def off!
@@ -27,12 +32,16 @@ module FakeCmd
     end
   end
 
-  def clear!
-    commands.clear
-  end
-
-  def commands
-    @_commands ||= Set.new
+  def on!
+    unless @@enabled
+      Kernel.class_eval do
+        alias_method :fakecmd_backquote, :`
+        def `(cmd)
+          FakeCmd.process_command(cmd)
+        end
+      end
+      @@enabled = true
+    end
   end
 
   def process_command(cmd)
@@ -43,15 +52,6 @@ module FakeCmd
       end
     end
     system ""
-  end
-
-  def add(cmd, status = 0, output = "", &block)
-    cmd = cmd.to_s if cmd.is_a?(Symbol)
-    commands << {
-      :regexp => Regexp.new(cmd),
-      :output => block ? block.call : output,
-      :status => status
-    }
   end
 end
 
