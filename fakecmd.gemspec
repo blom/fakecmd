@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.files       = Dir["[A-Z][A-Z]*", "lib/**/*.rb"]
   spec.author      = "Ørjan Blom"
   spec.email       = "blom@blom.tv"
-  spec.homepage    = "http://github.com/blom/fakecmd"
+  spec.homepage    = "https://github.com/blom/fakecmd"
 
   spec.add_development_dependency "bluecloth"
   spec.add_development_dependency "mg"

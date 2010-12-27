@@ -1,14 +1,14 @@
 fakecmd
 =======
 
-* [Homepage](http://github.com/blom/fakecmd)
-* [Documentation](http://rdoc.info/github/blom/fakecmd)
+* [Homepage](https://github.com/blom/fakecmd)
+* [Documentation](http://rdoc.info/gems/fakecmd)
 
 Fakes system commands. Intended for use in tests. If your code relies heavily
 on system commands and verifies their exit status, you may not want to rely on
 the OS to be able to run your tests. That's the basic idea.
 
-Originally inspired by [FakeFS](http://github.com/defunkt/fakefs).
+Originally inspired by [FakeFS](https://github.com/defunkt/fakefs).
 
 Installation
 ------------
