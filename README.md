@@ -1,6 +1,8 @@
 fakecmd
 =======
 
+[![Build Status](https://travis-ci.org/blom/fakecmd.png)](https://travis-ci.org/blom/fakecmd)
+
 * [Homepage](https://github.com/blom/fakecmd)
 * [Documentation](http://rdoc.info/gems/fakecmd)
 
