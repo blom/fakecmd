@@ -6,87 +6,14 @@ fakecmd
 * [Homepage](https://github.com/blom/fakecmd)
 * [Documentation](http://rdoc.info/gems/fakecmd)
 
-Fakes system commands. Intended for use in tests. If your code relies heavily
-on system commands and verifies their exit status, you may not want to rely on
-the OS to be able to run your tests. That's the basic idea.
+Fakes system commands. Intended for use in tests. If your code relies on system
+commands and perhaps verifies their exit status, you may not want to rely on
+the OS to be able to run your tests. Especially so if these commands have side
+effects or take a long time to run. Originally inspired by
+[FakeFS](https://github.com/defunkt/fakefs).
 
-Originally inspired by [FakeFS](https://github.com/defunkt/fakefs).
-
-Installation
-------------
-
-    gem install fakecmd
-
-Usage
------
-
-### Require
-
-    require "fakecmd"
-
-### Add some commands
-
-    FakeCmd.add "bar", 0, "pork"
-    FakeCmd.add :foo,  1, "chop"
-    FakeCmd.add /hat/, 2, "good"
-
-*Command*, *exit status*, and *output*.
-
-#### Everything is a regular expression internally
-
-    "hi"
-    :hi
-    /hi/
-
-All equal.
-
-### Enable
-
-Faking only happens between `on!` and `off!`, or in a block.
-
-#### `on!` and `off!`
-
-    FakeCmd.on!
-    # ...
-    FakeCmd.off!
-
-#### Block
-
-    FakeCmd do
-      # ...
-    end
-
-### Run
-
-#### Using the examples above
-
-    `bar mitzva`   # => "pork"
-    $?.exitstatus  # => 0
-
-    %x(fool)       # => "chop"
-    $?.exitstatus  # => 1
-
-    %x(nice hat)   # => "good"
-    $?.exitstatus  # => 2
-
-#### No match
-
-    `nope`        # => false
-    $?.exitstatus # => 127
-
-### Which calls are faked
-
-    ``
-    %x
-
-For now.
-
-### Clear the collection
-
-    FakeCmd.clear!
-
-A simple example
-----------------
+Example
+-------
 
     module Users
       def self.count
@@ -112,3 +39,23 @@ A simple example
         assert_equal 1, $?.exitstatus
       end
     end
+
+* `FakeCmd.clear!` clears the current collection of faked commands, if any.
+
+* `FakeCmd.add :users, 0, "a b c"` fakes the `users` command, defines its exit
+  status to be 0, and its output to be `a b c`. `:users` could have been a
+  string or regular expression as well; internally, everything is a regular
+  expression.
+
+* `FakeCmd { Users.count }` calls `Users.count` in the faked environment. You
+  can also use `FakeCmd.on!` and `FakeCmd.off!` to turn it on and off,
+  respectively. No system command using the backtick or `%x` notation will be
+  executed in the block or between `.on!` and `.off!`. `system ""` will be
+  executed if the command is not found in the collection.
+
+* `$?.exitstatus` reflects the exit status given to `.add`.
+
+Keep in mind that only the following calls will be faked:
+
+    ``
+    %x
