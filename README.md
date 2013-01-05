@@ -4,7 +4,7 @@ fakecmd
 [![Build Status](https://secure.travis-ci.org/blom/fakecmd.png)](https://travis-ci.org/blom/fakecmd)
 
 * [Homepage](https://github.com/blom/fakecmd)
-* [Documentation](http://rdoc.info/gems/fakecmd)
+* [Documentation](http://rubydoc.info/gems/fakecmd)
 
 Fakes system commands. Intended for use in tests. If your code relies on system
 commands and perhaps verifies their exit status, you may not want to rely on
