@@ -59,17 +59,36 @@ describe FakeCmd do
     end
   end
 
-  describe :@@enabled do
-    let(:enabled) { FakeCmd.send(:class_variable_get, :@@enabled) }
-
-    context "calling on!" do
-      before { FakeCmd.on! }
-      specify { enabled.should be true }
+  describe :on? do
+    it "should return false when off" do
+      FakeCmd.on?.should be false
     end
 
-    context "calling off!" do
-      before { FakeCmd.off! }
-      specify { enabled.should be false }
+    it "should return true when on" do
+      FakeCmd.on!
+      FakeCmd.on?.should be true
+    end
+  end
+
+  describe :on! do
+    it "should return true when not already on" do
+      FakeCmd.on!.should be true
+    end
+
+    it "should return nil when already on"  do
+      FakeCmd.on!
+      FakeCmd.on!.should be nil
+    end
+  end
+
+  describe :off! do
+    it "should return true when not already off" do
+      FakeCmd.on!
+      FakeCmd.off!.should be true
+    end
+
+    it "should return nil when already off"  do
+      FakeCmd.off!.should be nil
     end
   end
 end

@@ -3,7 +3,6 @@ require File.expand_path("../fakecmd/version", __FILE__)
 
 module FakeCmd
   module_function
-  @@enabled = false
 
   def add(cmd, status = 0, output = "", &block)
     cmd = cmd.to_s if cmd.is_a?(Symbol)
@@ -22,25 +21,29 @@ module FakeCmd
     @_commands ||= Set.new
   end
 
+  def on?
+    Kernel.private_methods.map(&:to_sym).include?(:fakecmd_backquote)
+  end
+
   def off!
-    if @@enabled
+    if on?
       Kernel.class_eval do
         alias_method :`, :fakecmd_backquote
         remove_method :fakecmd_backquote
       end
-      !@@enabled = false
+      true
     end
   end
 
   def on!
-    unless @@enabled
+    unless on?
       Kernel.class_eval do
         alias_method :fakecmd_backquote, :`
         def `(cmd)
           FakeCmd.process_command(cmd)
         end
       end
-      @@enabled = true
+      true
     end
   end
 
