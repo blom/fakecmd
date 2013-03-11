@@ -59,3 +59,8 @@ Keep in mind that only the following calls will be faked:
 
     ``
     %x
+
+Installation
+------------
+
+    gem install fakecmd
