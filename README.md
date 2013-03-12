@@ -2,6 +2,7 @@ fakecmd
 =======
 
 [![Build Status](https://travis-ci.org/blom/fakecmd.png)](https://travis-ci.org/blom/fakecmd)
+[![Gem Version](https://badge.fury.io/rb/fakecmd.png)](http://badge.fury.io/rb/fakecmd)
 
 * [Homepage](https://github.com/blom/fakecmd)
 * [Documentation](http://rubydoc.info/gems/fakecmd)
