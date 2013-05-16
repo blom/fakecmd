@@ -11,4 +11,5 @@ RSpec.configure do |config|
     FakeCmd.clear!
     FakeCmd.off!
   end
+  config.order = :random
 end
