@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = FakeCmd::VERSION.to_s
   spec.summary     = "Fakes system commands."
   spec.description = "Fakes system commands. Intended for use in tests."
+  spec.license     = "ISC"
   spec.files       = Dir["[A-Z][A-Z]*", "lib/**/*.rb"]
   spec.author      = "Ørjan Blom"
   spec.email       = "blom@blom.tv"
