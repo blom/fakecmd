@@ -1,8 +1,11 @@
 fakecmd
 =======
 
-[![Build Status](https://travis-ci.org/blom/fakecmd.png)](https://travis-ci.org/blom/fakecmd)
-[![Gem Version](https://badge.fury.io/rb/fakecmd.png)](http://badge.fury.io/rb/fakecmd)
+[![Build Status](http://img.shields.io/travis/blom/fakecmd.svg)][travis]
+[![Gem Version](http://img.shields.io/gem/v/fakecmd.svg)][gem]
+
+[travis]: https://travis-ci.org/blom/fakecmd
+[gem]: http://rubygems.org/gems/fakecmd
 
 * [Homepage](https://github.com/blom/fakecmd)
 * [Documentation](http://rubydoc.info/gems/fakecmd)
