@@ -50,10 +50,10 @@ describe FakeCmd do
 
     context "given a nonexistent command" do
       it "should set the proper exit status" do
-        system ""
+        system "__nonexistent__"
         es = $?.exitstatus
 
-        FakeCmd { %x() }
+        FakeCmd { %x(__nonexistent__) }
         $?.exitstatus.should == es
       end
     end

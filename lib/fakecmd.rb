@@ -54,7 +54,7 @@ module FakeCmd
         return h[:output]
       end
     end
-    system ""
+    system "__nonexistent__"
   end
 end
 
